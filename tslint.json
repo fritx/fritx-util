@@ -1,0 +1,9 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "import-spacing": true,
+    "no-implicit-dependencies": [true, "dev"],
+    "quotemark": [true, "single"],
+    "semicolon": [true, "never"]
+  }
+}
