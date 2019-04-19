@@ -24,3 +24,36 @@ export function avoidDetection(text: string) {
 export function ensureDomText(text: string) {
   return text.replace(/ /g, '\u00A0')
 }
+
+/**
+ * @see http://stackoverflow.com/questions/8840580/force-dom-redraw-refresh-on-chrome-mac
+ * @example
+ * handleWinResize () {
+ *   this.forceUpdate(() => {
+ *      const el = this.refs.img.refs.el
+ *      forceRedraw(el)
+ *    })
+ *  }
+ */
+export function forceRedraw(element: HTMLElement) {
+  // var n = document.createTextNode(' ');
+  // var disp = element.style.display;  // don't worry about previous display style
+  // element.appendChild(n);
+  // element.style.display = 'none';
+  // setTimeout(function(){
+  //     element.style.display = disp;
+  //     n.parentNode.removeChild(n);
+  // },20); // you can play with this timeout to make it as short as possible
+  const v = element.style.overflow
+  const newV = v === 'hidden' ? 'visible' : 'hidden'
+  element.style.overflow = newV
+}
+
+// http://stackoverflow.com/questions/14125415/how-can-i-check-if-css-calc-is-available-using-javascript
+export function supportsCSSCalc() {
+  const prop = 'width:'
+  const value = 'calc(10px);'
+  const el = document.createElement('div')
+  el.style.cssText = ['-webkit-', '', ''].join(prop + value)
+  return !!el.style.length
+}

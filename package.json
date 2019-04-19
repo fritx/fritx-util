@@ -29,7 +29,9 @@
   "deprecated": false,
   "devDependencies": {
     "@types/koa": "^2.0.48",
+    "@types/lodash": "^4.14.123",
     "ava": "^1.4.1",
+    "ioredis": "^4.9.0",
     "koa": "^2.7.0",
     "lodash": "^4.17.11",
     "tslint": "^5.16.0",

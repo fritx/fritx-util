@@ -52,6 +52,16 @@ export function hang() {
  *     throw err
  *   }
  * })
+ * // or
+ * await retry(async attempt => {
+ *   let [resp, data] = await request(url)
+ *     if (resp.statusCode !== 200) {
+ *     let err = new Error(`${resp.statusCode} !== 200`)
+ *     return attempt(err) // 某些异常时 可重试 重试次数达上限 才返回该异常
+ *   }
+ *   let { result: { url } } = data
+ *   return url // 正常时 返回结果
+ * }
  * ```
  */
 export async function retry(func: Thunk, opts: {

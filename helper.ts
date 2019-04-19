@@ -1,7 +1,5 @@
 import { Readable } from 'stream'
 
-type SyncOrAsync<T> = (() => T) | (() => Promise<T>)
-
 /**
  * @example
  * ```ts
@@ -12,7 +10,7 @@ type SyncOrAsync<T> = (() => T) | (() => Promise<T>)
  * )
  * ```
  */
-export async function withFallbacks<T = any>(...fns: Array<SyncOrAsync<T>>): Promise<T> {
+export async function withFallbacks<T = any>(...fns: Array<SyncOrAsync<any[], T>>): Promise<T> {
   for (const fn of fns) {
     let ret: T
     try {

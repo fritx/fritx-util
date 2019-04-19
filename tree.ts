@@ -1,5 +1,5 @@
-import _ from 'lodash'
-import {createCleanMap} from './object'
+import * as _ from 'lodash'
+import { createCleanMap } from './object'
 
 const childrenProp = 'children'
 const parentProp = 'parent'
@@ -21,20 +21,27 @@ export function treeToList<T>(tree: Tree<T>) {
   return list
 }
 
-type TreeItem<T> = T & {
+interface ITreeInputMeta {
   [idProp]: string,
   [parentProp]: string,
 }
-type TreeItemList<T> = Array<TreeItem<T>>
+type TreeInput<T> = T & ITreeInputMeta
+type TreeInputList<T> = Array<TreeInput<T>>
+
+interface ITreeOutputMeta<T> {
+  [childrenProp]?: Array<TreeInput<T>>,
+}
+type TreeOutput<T> = TreeInput<T> & ITreeOutputMeta<T>
+type TreeOutputList<T> = Array<TreeOutput<T>>
 
 interface IChildrenMap<T> {
-  [key: string]: TreeItemList<T>,
+  [key: string]: TreeOutputList<T>,
 }
-interface ITreeReturn<T> extends TreeItemList<T> {
-  parentsNoFound?: TreeItemList<T>,
+interface ITreeReturn<T> extends TreeOutputList<T> {
+  parentsNoFound: string[],
 }
 
-export function listToTree<T>(list: TreeItemList<T>) {
+export function listToTree<T extends ITreeInputMeta>(list: TreeInputList<T>) {
   const childrenMap: IChildrenMap<T> = createCleanMap()
   list = _.cloneDeep(list)
   list.forEach((item) => {
@@ -47,20 +54,21 @@ export function listToTree<T>(list: TreeItemList<T>) {
     }
   })
   const parentsNoFound = []
-  _.each(childrenMap, (childrenItems: TreeItemList<T>, parentKey: string) => {
+  _.each(childrenMap, (childrenItems: TreeInputList<T>, parentKey: string) => {
     const parentItem = _.find(list, { [idProp]: parentKey })
     if (!parentItem) {
       parentsNoFound.push(parentKey)
       return
     }
     childrenItems.forEach((childrenItem) => {
-      if (!parentItem.children) {
-        parentItem.children = []
+      if (!parentItem[childrenProp]) {
+        parentItem[childrenProp] = []
       }
-      parentItem.children.push(childrenItem)
+      parentItem[childrenProp].push(childrenItem)
     })
   })
-  const tree: ITreeReturn<T> = list.filter((item) => !item[parentProp])
-  tree.parentsNoFound = parentsNoFound
-  return tree
+  const tree: TreeOutputList<T> = list.filter((item) => !item[parentProp])
+  const ret = tree as ITreeReturn<T>
+  ret.parentsNoFound = parentsNoFound
+  return ret
 }
