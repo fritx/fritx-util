@@ -1,46 +1,22 @@
 {
-  "_from": "@fritx/util",
-  "_id": "@fritx/util@0.0.0",
-  "_inBundle": false,
-  "_integrity": "sha1-B2uXIUc2PI/zWKTV9MPc0o2AlBE=",
-  "_location": "/@fritx/util",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "@fritx/util",
-    "name": "@fritx/util",
-    "escapedName": "@fritx%2futil",
-    "scope": "@fritx",
-    "rawSpec": "",
-    "saveSpec": null,
-    "fetchSpec": "latest"
+  "name": "@fritx/util",
+  "version": "0.0.0",
+  "types": "./types",
+  "scripts": {
+    "test": "ava"
   },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "http://registry.npm.taobao.org/@fritx/util/download/@fritx/util-0.0.0.tgz",
-  "_shasum": "076b972147363c8ff358a4d5f4c3dcd28d809411",
-  "_spec": "@fritx/util",
-  "_where": "/Users/fritx/t",
-  "bundleDependencies": false,
-  "dependencies": {},
-  "deprecated": false,
   "devDependencies": {
     "@types/koa": "^2.0.48",
     "@types/lodash": "^4.14.123",
+    "@types/node": "^11.13.6",
     "ava": "^1.4.1",
+    "axios": "^0.18.0",
+    "encoding": "^0.1.12",
     "ioredis": "^4.9.0",
+    "jschardet": "^2.1.0",
     "koa": "^2.7.0",
     "lodash": "^4.17.11",
     "tslint": "^5.16.0",
     "typescript": "^3.4.3"
-  },
-  "name": "@fritx/util",
-  "scripts": {
-    "test": "ava"
-  },
-  "types": "./types",
-  "version": "0.0.0"
+  }
 }
